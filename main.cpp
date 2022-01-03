@@ -12,5 +12,4 @@ using namespace std;
 int main() {
 	Board board;
 	board.start_game();
-	//add
 }
