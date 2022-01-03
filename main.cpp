@@ -1,5 +1,5 @@
-//ëª…ì˜ˆì„œì•½(Honor Code)
-//ë‚˜ëŠ” ì´ í”„ë¡œê·¸ë˜ë° ê³¼ì œë¥¼ ë‹¤ë¥¸ ì‚¬ëŒì˜ ë¶€ì ì ˆí•œ ë„ì›€ ì—†ì´ ì™„ìˆ˜í•˜ì˜€ìŠµë‹ˆë‹¤.
+//¸í¿¹¼­¾à(Honor Code)
+//³ª´Â ÀÌ ÇÁ·Î±×·¡¹Ö °úÁ¦¸¦ ´Ù¸¥ »ç¶÷ÀÇ ºÎÀûÀıÇÑ µµ¿ò ¾øÀÌ ¿Ï¼öÇÏ¿´½À´Ï´Ù.
 //I completed this programming task without the improper help of others.
 #include <iostream>
 #include "Board.h"
@@ -11,5 +11,20 @@ using namespace std;
 
 int main() {
 	Board board;
-	board.start_game();
+	int option;
+	cout << "----------------------------------\n" << endl;
+	cout << "Which Game Do You Want to Play" << endl;
+	cout << "1. Player" << endl << "2. AI\n" << endl;
+	cout << "----------------------------------\n" << endl;
+	cin >> option;
+
+	switch (option) {
+	case 1:
+		board.start_game();
+		break;
+	
+	default:
+		break;
+	}
+	
 }

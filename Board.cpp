@@ -50,13 +50,13 @@ void Board::printboard(){//display board
     system("clear");
     for(int i = 0; i < 26; i++){
         printf("\033[%d;%dH", 1, 2*i + 1);
-        cout << "â—";
+        cout << "¡Ü";
         printf("\033[%d;%dH", 26, 2*i + 1);
-        cout << "â—";
+        cout << "¡Ü";
         printf("\033[%d;%dH", i + 1, 1);
-        cout << "â—";
+        cout << "¡Ü";
         printf("\033[%d;%dH", i + 1, 51);
-        cout << "â—";
+        cout << "¡Ü";
     }
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){

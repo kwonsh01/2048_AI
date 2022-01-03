@@ -7,14 +7,14 @@ Shape::Shape(){
 	x = 0;
 	y = 0;
 	color = WHITE;
-	msg = "â– ";
+	msg = "¡á";
 }
 
 Shape::Shape(int x_, int y_, Color color_) {
 	x = x_;
 	y = y_;
 	color = color_;
-	msg ="â– ";
+	msg ="¡á";
 }
 
 Shape::Shape(int x_, int y_, Color color_, string msg_) {
