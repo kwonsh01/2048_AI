@@ -25,6 +25,9 @@ public:
     int move_s();
     int move_d();
     bool move(char input, bool& score_change);
+
+    void start_AI(int x = 0);
+    int reward();
 };
 
 #endif

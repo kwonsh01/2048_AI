@@ -82,23 +82,23 @@ void Board::printboard(){//display board
 
 void Board::random_Tile(int count){             //Make two random tile (2 or 4)
     srand((unsigned int)time(NULL));
-    int rannum;
+    int rannum = 2;
     int x;
     int y;
     int cnt = 0;
     while(cnt < count){
         x = rand() % 4;
         y = rand() % 4;
-        rannum = 2 * (rand() % 2 + 1);          //random pick 2 or 4
+        // rannum = 2 * (rand() % 2 + 1);          //random pick 2 or 4
         if (!board[x][y]->getValue()) {         //if empty tile
             if (rannum == 2) {
                 delete board[x][y];
                 board[x][y] = new Tile2(x, y);  //make new tile
             }
-            else {
-                delete board[x][y];
-                board[x][y] = new Tile4(x, y);  //make new tile
-            }
+            // else {
+            //     delete board[x][y];
+            //     board[x][y] = new Tile4(x, y);  //make new tile
+            // }
             cnt++;
         }
     } 
@@ -434,4 +434,21 @@ bool Board::move(char input, bool& score_change){//move & merge & make random ti
         (*this).random_Tile();
         return temp;
     }
+}
+
+void Board::start_AI(int x){
+    static int num;
+    if(x != 0){
+        num = 0;
+    }
+    if(num < 5){
+        cout << num << endl;
+        num++;
+        start_AI();
+    }
+    else{
+        cout << "End";
+        return;
+    }
+    return;
 }

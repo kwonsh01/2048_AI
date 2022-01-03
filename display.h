@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Shape.h"
 
-#define gotoxy(x,y) printf("\033[%d;%dH", (y+2), (x*2+2) + 1)//¾Æ·¡·Î y+2
+#define gotoxy(x,y) printf("\033[%d;%dH", (y+2), (x*2+2) + 1)//ï¿½Æ·ï¿½ï¿½ï¿½ y+2
 #define cRESET "\033[0m"
 #define cBLACK "\033[30m"
 #define cRED "\033[31m"
