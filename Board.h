@@ -18,7 +18,7 @@ public:
     void random_Tile(int count = 1);
     void start_game();
     bool moveable();
-    bool mergable();
+    bool mergable(char input);
     bool merge(char input, bool& score_change);
     int move_w();
     int move_a();

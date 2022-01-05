@@ -15,7 +15,7 @@ int main() {
 	cout << "1. Player" << endl << "2. AI\n" << endl;
 	cout << "----------------------------------\n" << endl;
 	cin >> option;
-
+	system("clear");
 	switch (option) {
 	case 1:
 		board.start_game();

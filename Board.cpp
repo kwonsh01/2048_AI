@@ -47,7 +47,6 @@ void Board::initialize(){//make 4*4 Tile0 array
 }
 
 void Board::printboard(){//display board
-    system("clear");
     for(int i = 0; i < 26; i++){
         printf("\033[%d;%dH", 1, 2*i + 1);
         cout << "¡Ü";
@@ -175,11 +174,18 @@ bool Board::moveable(){                         //true: moveable, false: can't m
     return false;
 }//empty tiles exist or mergeable tile exists -> moveable
 
-bool Board::mergable(){
-    for(int i = 0; i < 3; i++){                 //Find mergeable tile
-        for(int j = 0; j < 3; j++){
-            if( (board[i][j]->isMergable(board[i][j + 1])) || (board[i][j]->isMergable(board[i + 1][j])) || (board[i + 1][j + 1]->isMergable(board[i + 1][j])) || (board[i + 1][j + 1]->isMergable(board[i][j + 1]))){
-                return true;
+bool Board::mergable(char input){
+    if(input == 'w' || input == 's' ){
+        for(int x = 0; x < 4; x++){
+            for(int y = 0; y< 3; y++){
+                if(board[x][y]->isMergable(board[x][y + 1])) return true;
+            }
+        }
+    }
+    else if(input == 'a' || input == 'd'){
+        for(int x = 0; x < 3; x++){
+            for(int y = 0; y< 4; y++){
+                if(board[x][y]->isMergable(board[x + 1][y])) return true;
             }
         }
     }
@@ -423,8 +429,8 @@ bool Board::move(char input, bool& score_change){//move & merge & make random ti
     else{
         count = this->move_d();
     }
-
-    if(!count && !this->mergable()){//can't merge
+    system("clear");
+    if(!count && !this->mergable(input)){//can't merge
         printf("\033[%d;%dH", 28, 0);
         cout << "Nothing Moved!";
         return false;
