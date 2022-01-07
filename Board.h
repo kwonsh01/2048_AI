@@ -26,8 +26,10 @@ public:
     int move_d();
     bool move(char input, bool& score_change);
 
-    void start_AI(int x = 0);
-    int reward();
+    void start_AI();
+    int deep_move(Tile*** map, int x = 0);
+    int reward(Tile*** map);
+    void printboard(int temp);
 };
 
 #endif

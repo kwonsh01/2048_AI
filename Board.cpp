@@ -31,7 +31,7 @@ Board::~Board(){//delete 4*4 Tile* array
     }
 
 	for(int i = 0; i < 4; i++){
-		delete board[i];
+		delete[] board[i];
 	}
 	delete[] board;
 
@@ -151,7 +151,6 @@ void Board::start_game(){//important game control function
             return;
         }
     }
-	
 }
 
 bool Board::moveable(){                         //true: moveable, false: can't move(game ended)
@@ -431,8 +430,8 @@ bool Board::move(char input, bool& score_change){//move & merge & make random ti
     }
     system("clear");
     if(!count && !this->mergable(input)){//can't merge
-        printf("\033[%d;%dH", 28, 0);
-        cout << "Nothing Moved!";
+        // printf("\033[%d;%dH", 28, 0);
+        // cout << "Nothing Moved!";
         return false;
     }
     else{
@@ -442,19 +441,230 @@ bool Board::move(char input, bool& score_change){//move & merge & make random ti
     }
 }
 
-void Board::start_AI(int x){
+void Board::start_AI(){
+    bool num_2048 = false;                  //decide whether to win or lose
+    bool score_change = false;              //decide whether to write scores to a text file
+    char next_move;
+    (*this).initialize();//make 4*4 Tile0 board
+    (*this).random_Tile(2);//2 random tile
+    (*this).printboard();//display
+	while(true){
+        if(score_change){                   //score was changed -> write to text file
+            outfile << score << endl;
+            score_change = false;
+        }
+        next_move = char(deep_move(board ,1));
+        cout << "NEXT MOVE: " << next_move;
+        num_2048 = (*this).move(next_move, score_change);
+
+        (*this).printboard();
+        //_sleep(1000);
+        if(this->moveable()){       //check moveable
+            if(num_2048){           //if make 2048 tile
+                outfile << "You Won!";  //win
+                printf("\033[%d;%dH", 28, 0);
+                cout << "You Won!";
+                return;
+            }
+        }
+        else{   //can't move
+            outfile << "You Lost!";
+            printf("\033[%d;%dH", 28, 0);
+            cout << "You Lost!";
+            return;
+        }
+    }
+}
+int Board::deep_move(Tile*** map,int x){
     static int num;
+    
     if(x != 0){
         num = 0;
     }
-    if(num < 5){
-        cout << num << endl;
+
+    Tile*** WW;
+    Tile*** AA;
+    Tile*** SS;
+    Tile*** DD;
+    WW = new Tile**[4];
+    AA = new Tile**[4];
+    SS = new Tile**[4];
+    DD = new Tile**[4];
+	for(int i = 0; i < 4; i++){
+		WW[i] = new Tile*[4];
+		AA[i] = new Tile*[4];
+		SS[i] = new Tile*[4];
+		DD[i] = new Tile*[4];
+	}
+    for(int x = 0; x < 4; x++){
+        for(int y = 0; y < 4; y++){
+            switch (map[x][y]->getValue()) {
+                case 0: WW[x][y] = new Tile0(x, y);
+                        AA[x][y] = new Tile0(x, y);
+                        SS[x][y] = new Tile0(x, y);
+                        DD[x][y] = new Tile0(x, y);
+                        break;
+                case 2: WW[x][y] = new Tile2(x, y);
+                        AA[x][y] = new Tile2(x, y);
+                        SS[x][y] = new Tile2(x, y);
+                        DD[x][y] = new Tile2(x, y);
+                        break;
+                case 4: WW[x][y] = new Tile4(x, y);
+                        AA[x][y] = new Tile4(x, y);
+                        SS[x][y] = new Tile4(x, y);
+                        DD[x][y] = new Tile4(x, y);
+                        break;
+                case 8: WW[x][y] = new Tile8(x, y);
+                        AA[x][y] = new Tile8(x, y);
+                        SS[x][y] = new Tile8(x, y);
+                        DD[x][y] = new Tile8(x, y);
+                        break;
+                case 16: WW[x][y] = new Tile16(x, y);
+                        AA[x][y] = new Tile16(x, y);
+                        SS[x][y] = new Tile16(x, y);
+                        DD[x][y] = new Tile16(x, y);
+                        break;
+                case 32: WW[x][y] = new Tile32(x, y);
+                        AA[x][y] = new Tile32(x, y);
+                        SS[x][y] = new Tile32(x, y);
+                        DD[x][y] = new Tile32(x, y);
+                        break;
+                case 64: WW[x][y] = new Tile64(x, y);
+                        AA[x][y] = new Tile64(x, y);
+                        SS[x][y] = new Tile64(x, y);
+                        DD[x][y] = new Tile64(x, y);
+                        break;
+                case 128: WW[x][y] = new Tile128(x, y);
+                        AA[x][y] = new Tile128(x, y);
+                        SS[x][y] = new Tile128(x, y);
+                        DD[x][y] = new Tile128(x, y);
+                        break;
+                case 256: WW[x][y] = new Tile256(x, y);
+                        AA[x][y] = new Tile256(x, y);
+                        SS[x][y] = new Tile256(x, y);
+                        DD[x][y] = new Tile256(x, y);
+                        break;
+                case 512: WW[x][y] = new Tile512(x, y);
+                        AA[x][y] = new Tile512(x, y);
+                        SS[x][y] = new Tile512(x, y);
+                        DD[x][y] = new Tile512(x, y);
+                        break;
+                case 1024: WW[x][y] = new Tile1024(x, y);
+                        AA[x][y] = new Tile1024(x, y);
+                        SS[x][y] = new Tile1024(x, y);
+                        DD[x][y] = new Tile1024(x, y);
+                        break;
+            }
+        }
+    }
+    
+    int nextw;
+    int nexta;
+    int nexts;
+    int nextd;
+
+    Board WWW, AAA, SSS, DDD;
+    AAA.board = AA;
+    SSS.board = SS;
+    DDD.board = DD;
+    WWW.board = WW;
+    bool scorew = false;
+    bool scorea = false;
+    bool scores = false;
+    bool scored = false;
+
+    // system("clear");
+    // WWW.printboard(5);
+    // system("clear");
+
+    WWW.move('w', scorew);
+    AAA.move('a', scorea);
+    SSS.move('s', scores);
+    DDD.move('d', scored);
+    if(scorew || scorea || scores || scored){
+        return INT_MAX;
+    }
+
+    if(num < 2){ //num + 1번 움직인것
         num++;
-        start_AI();
+
+        // WWW.printboard(5);
+        // system("clear");
+        // AAA.printboard(5);
+        // system("clear");
+        // SSS.printboard(5);
+        // system("clear");
+        // DDD.printboard(5);
+        // system("clear");
+
+        nextw = deep_move(WW);
+        nexta = deep_move(AA);
+        nexts = deep_move(SS);
+        nextd = deep_move(DD);
     }
     else{
-        cout << "End";
-        return;
+        return max(max(reward(WW), reward(AA)), max(reward(SS), reward(DD)));
     }
-    return;
+
+    if(x != 0){
+        int max_in = max(max(nextw, nexta), max(nexts, nextd));
+        if(max_in == nextw){
+            return int('w');
+        }
+        else if(max_in == nexta){
+            return int('a');
+        }   
+        else if(max_in == nexts){
+            return int('s');
+        }
+        else{
+            return int('d');
+        }
+    }
+    else{
+        return max(max(nextw, nexta), max(nexts, nextd));
+    }
+}
+
+int Board::reward(Tile*** map){
+    int reward = 0;
+    int temp[4][4];
+    for(int x = 0; x < 4; x++){
+        for(int y = 0; y < 4; y++){
+            temp[x][y] = map[x][y]->getValue();
+        }
+    }
+    for(int x = 0; x < 4; x++){
+        for(int y = 0; y < 3; y++){
+            if(temp[y + 1][x] - temp[y][x] > 0){ //오른쪽으로 증가
+                reward += 2*temp[y+1][x];
+            }
+        }
+    }
+    for(int x = 0; x < 4; x++){
+        for(int y = 0; y < 3; y++){ //위쪽으로 증가
+            if(temp[x][y] - temp[x][y+1] > 0){
+                reward += 2*temp[x][y];
+            }
+        }
+    }
+    int max = 0;
+    for(int x = 0; x < 4; x++){
+        for(int y = 0; y < 4; y++){
+            if(temp[x][y] > max){
+                max = temp[x][y];
+            }
+        }
+    }
+    reward += max;
+    return reward;
+}
+
+void Board::printboard(int temp){//display board
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            cout << board[j][i]->getValue() << " ";
+        }
+        cout << endl;
+    }
 }

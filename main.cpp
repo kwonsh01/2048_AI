@@ -21,7 +21,7 @@ int main() {
 		board.start_game();
 		break;
 	case 2:
-		board.start_AI(1);
+		board.start_AI();
 		break;
 	default:
 		break;
