@@ -428,7 +428,7 @@ bool Board::move(char input, bool& score_change){//move & merge & make random ti
     else{
         count = this->move_d();
     }
-    system("clear");
+    // system("clear");
     if(!count && !this->mergable(input)){//can't merge
         // printf("\033[%d;%dH", 28, 0);
         // cout << "Nothing Moved!";
@@ -482,77 +482,72 @@ int Board::deep_move(Tile*** map,int x){
         num = 0;
     }
 
-    Tile*** WW;
-    Tile*** AA;
-    Tile*** SS;
-    Tile*** DD;
-    WW = new Tile**[4];
-    AA = new Tile**[4];
-    SS = new Tile**[4];
-    DD = new Tile**[4];
-	for(int i = 0; i < 4; i++){
-		WW[i] = new Tile*[4];
-		AA[i] = new Tile*[4];
-		SS[i] = new Tile*[4];
-		DD[i] = new Tile*[4];
-	}
+    Board* WWW;
+    Board* AAA;
+    Board* SSS;
+    Board* DDD;
+    WWW = new Board();
+    AAA = new Board();
+    SSS = new Board();
+    DDD = new Board();
+
     for(int x = 0; x < 4; x++){
         for(int y = 0; y < 4; y++){
             switch (map[x][y]->getValue()) {
-                case 0: WW[x][y] = new Tile0(x, y);
-                        AA[x][y] = new Tile0(x, y);
-                        SS[x][y] = new Tile0(x, y);
-                        DD[x][y] = new Tile0(x, y);
+                case 0: WWW->board[x][y] = new Tile0(x, y);
+                        AAA->board[x][y] = new Tile0(x, y);
+                        SSS->board[x][y] = new Tile0(x, y);
+                        DDD->board[x][y] = new Tile0(x, y);
                         break;
-                case 2: WW[x][y] = new Tile2(x, y);
-                        AA[x][y] = new Tile2(x, y);
-                        SS[x][y] = new Tile2(x, y);
-                        DD[x][y] = new Tile2(x, y);
+                case 2: WWW->board[x][y] = new Tile2(x, y);
+                        AAA->board[x][y] = new Tile2(x, y);
+                        SSS->board[x][y] = new Tile2(x, y);
+                        DDD->board[x][y] = new Tile2(x, y);
                         break;
-                case 4: WW[x][y] = new Tile4(x, y);
-                        AA[x][y] = new Tile4(x, y);
-                        SS[x][y] = new Tile4(x, y);
-                        DD[x][y] = new Tile4(x, y);
+                case 4: WWW->board[x][y] = new Tile4(x, y);
+                        AAA->board[x][y] = new Tile4(x, y);
+                        SSS->board[x][y] = new Tile4(x, y);
+                        DDD->board[x][y] = new Tile4(x, y);
                         break;
-                case 8: WW[x][y] = new Tile8(x, y);
-                        AA[x][y] = new Tile8(x, y);
-                        SS[x][y] = new Tile8(x, y);
-                        DD[x][y] = new Tile8(x, y);
+                case 8: WWW->board[x][y] = new Tile8(x, y);
+                        AAA->board[x][y] = new Tile8(x, y);
+                        SSS->board[x][y] = new Tile8(x, y);
+                        DDD->board[x][y] = new Tile8(x, y);
                         break;
-                case 16: WW[x][y] = new Tile16(x, y);
-                        AA[x][y] = new Tile16(x, y);
-                        SS[x][y] = new Tile16(x, y);
-                        DD[x][y] = new Tile16(x, y);
+                case 16: WWW->board[x][y] = new Tile16(x, y);
+                        AAA->board[x][y] = new Tile16(x, y);
+                        SSS->board[x][y] = new Tile16(x, y);
+                        DDD->board[x][y] = new Tile16(x, y);
                         break;
-                case 32: WW[x][y] = new Tile32(x, y);
-                        AA[x][y] = new Tile32(x, y);
-                        SS[x][y] = new Tile32(x, y);
-                        DD[x][y] = new Tile32(x, y);
+                case 32: WWW->board[x][y] = new Tile32(x, y);
+                        AAA->board[x][y] = new Tile32(x, y);
+                        SSS->board[x][y] = new Tile32(x, y);
+                        DDD->board[x][y] = new Tile32(x, y);
                         break;
-                case 64: WW[x][y] = new Tile64(x, y);
-                        AA[x][y] = new Tile64(x, y);
-                        SS[x][y] = new Tile64(x, y);
-                        DD[x][y] = new Tile64(x, y);
+                case 64: WWW->board[x][y] = new Tile64(x, y);
+                        AAA->board[x][y] = new Tile64(x, y);
+                        SSS->board[x][y] = new Tile64(x, y);
+                        DDD->board[x][y] = new Tile64(x, y);
                         break;
-                case 128: WW[x][y] = new Tile128(x, y);
-                        AA[x][y] = new Tile128(x, y);
-                        SS[x][y] = new Tile128(x, y);
-                        DD[x][y] = new Tile128(x, y);
+                case 128: WWW->board[x][y] = new Tile128(x, y);
+                        AAA->board[x][y] = new Tile128(x, y);
+                        SSS->board[x][y] = new Tile128(x, y);
+                        DDD->board[x][y] = new Tile128(x, y);
                         break;
-                case 256: WW[x][y] = new Tile256(x, y);
-                        AA[x][y] = new Tile256(x, y);
-                        SS[x][y] = new Tile256(x, y);
-                        DD[x][y] = new Tile256(x, y);
+                case 256: WWW->board[x][y] = new Tile256(x, y);
+                        AAA->board[x][y] = new Tile256(x, y);
+                        SSS->board[x][y] = new Tile256(x, y);
+                        DDD->board[x][y] = new Tile256(x, y);
                         break;
-                case 512: WW[x][y] = new Tile512(x, y);
-                        AA[x][y] = new Tile512(x, y);
-                        SS[x][y] = new Tile512(x, y);
-                        DD[x][y] = new Tile512(x, y);
+                case 512: WWW->board[x][y] = new Tile512(x, y);
+                        AAA->board[x][y] = new Tile512(x, y);
+                        SSS->board[x][y] = new Tile512(x, y);
+                        DDD->board[x][y] = new Tile512(x, y);
                         break;
-                case 1024: WW[x][y] = new Tile1024(x, y);
-                        AA[x][y] = new Tile1024(x, y);
-                        SS[x][y] = new Tile1024(x, y);
-                        DD[x][y] = new Tile1024(x, y);
+                case 1024: WWW->board[x][y] = new Tile1024(x, y);
+                        AAA->board[x][y] = new Tile1024(x, y);
+                        SSS->board[x][y] = new Tile1024(x, y);
+                        DDD->board[x][y] = new Tile1024(x, y);
                         break;
             }
         }
@@ -563,11 +558,6 @@ int Board::deep_move(Tile*** map,int x){
     int nexts;
     int nextd;
 
-    Board WWW, AAA, SSS, DDD;
-    AAA.board = AA;
-    SSS.board = SS;
-    DDD.board = DD;
-    WWW.board = WW;
     bool scorew = false;
     bool scorea = false;
     bool scores = false;
@@ -577,15 +567,15 @@ int Board::deep_move(Tile*** map,int x){
     // WWW.printboard(5);
     // system("clear");
 
-    WWW.move('w', scorew);
-    AAA.move('a', scorea);
-    SSS.move('s', scores);
-    DDD.move('d', scored);
+    WWW->move('w', scorew);
+    AAA->move('a', scorea);
+    SSS->move('s', scores);
+    DDD->move('d', scored);
     if(scorew || scorea || scores || scored){
         return INT_MAX;
     }
 
-    if(num < 2){ //num + 1번 움직인것
+    if(num < 2){ //num + 1번 움직인것 총 3단계 진입
         num++;
 
         // WWW.printboard(5);
@@ -597,16 +587,20 @@ int Board::deep_move(Tile*** map,int x){
         // DDD.printboard(5);
         // system("clear");
 
-        nextw = deep_move(WW);
-        nexta = deep_move(AA);
-        nexts = deep_move(SS);
-        nextd = deep_move(DD);
+        nextw = deep_move(WWW->board);
+        nexta = deep_move(AAA->board);
+        nexts = deep_move(SSS->board);
+        nextd = deep_move(DDD->board);
     }
     else{
-        return max(max(reward(WW), reward(AA)), max(reward(SS), reward(DD)));
+        return max(max(reward(WWW->board), reward(AAA->board)), max(reward(SSS->board), reward(DDD->board)));
     }
 
     if(x != 0){
+        delete WWW;
+        delete AAA;
+        delete SSS;
+        delete DDD;
         int max_in = max(max(nextw, nexta), max(nexts, nextd));
         if(max_in == nextw){
             return int('w');
@@ -622,6 +616,10 @@ int Board::deep_move(Tile*** map,int x){
         }
     }
     else{
+        delete WWW;
+        delete AAA;
+        delete SSS;
+        delete DDD;
         return max(max(nextw, nexta), max(nexts, nextd));
     }
 }
